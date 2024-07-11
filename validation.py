@@ -13,6 +13,7 @@ def validation(x_train, t_train, x_test, t_test):
     learning_rate = 0.1
 
     train_loss_list = []
+    test_loss_list = []
     train_acc_list = []
     test_acc_list = []
 
@@ -45,12 +46,19 @@ def validation(x_train, t_train, x_test, t_test):
             if isinstance(x_train, cp.ndarray):
                 train_acc = network.accuracy(x_train.get(), t_train.get())
                 test_acc = network.accuracy(x_test.get(), t_test.get())
+                train_loss = network.loss(x_train.get(), t_train.get())
+                test_loss = network.loss(x_test.get(), t_test.get())
             else:
                 train_acc = network.accuracy(x_train, t_train)
                 test_acc = network.accuracy(x_test, t_test)
+                train_loss = network.loss(x_train, t_train)
+                test_loss = network.loss(x_test, t_test)
 
             train_acc_list.append(train_acc)
             test_acc_list.append(test_acc)
+            train_loss_list.append(train_loss)
+            test_loss_list.append(test_loss)
+
             print("train acc, test acc |" + str(train_acc) + ", " + str(test_acc))
 
-    return train_acc_list, test_acc_list
+    return train_acc_list, test_acc_list, train_loss_list, test_loss_list
